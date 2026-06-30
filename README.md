@@ -38,3 +38,32 @@ serverless-github-jira-automation/
 │   └── lambda_function.py     # Main event handler execution script
 ├── README.md                  # Eloquent system architecture documentation
 └── requirements.txt           # Declared project runtime dependencies
+## 📋 Installation & Deployment Guide
+
+Follow these steps to deploy this serverless automation tool into your own cloud environment:
+
+### 1. Jira Authentication Configuration
+* Navigate to [Atlassian API Token Management](https://id.atlassian.com/manage-profile/security/api-tokens) and generate a new token.
+* Note your target Jira **Project Key** (e.g., `DEV`) from your project board settings.
+
+### 2. AWS Lambda Provisioning
+* Create a new AWS Lambda function from scratch using the **Python 3.12** runtime environment.
+* Attach a public `requests` library Layer to the function based on your AWS region (e.g., using the community Klayers project ARNs) to support external HTTP requests.
+* Copy the source code from `src/lambda_function.py` into the online code editor and click **Deploy**.
+
+### 3. Secure Environment Configurations
+Navigate to **Configuration > Environment variables** within your Lambda console and securely inject the following four key-value pairs:
+* `JIRA_EMAIL` — Your Atlassian account login email.
+* `JIRA_API_TOKEN` — The secure API token generated in Step 1.
+* `JIRA_PROJECT_KEY` — Your capitalized target project abbreviation key.
+* `JIRA_URL` — Your workspace endpoint (e.g., `https://your-domain.atlassian.net/rest/api/3/issue`).
+
+### 4. Expose the Serverless Endpoint
+* In the Lambda configuration tab, navigate to **Function URL** and click **Create Function URL**.
+* Set the **Auth type** to `NONE` to allow incoming webhooks from external networks, and copy the generated public HTTPS URL string.
+
+### 5. Wire Up the GitHub Webhook
+* Go to your GitHub repository and open **Settings > Webhooks > Add Webhook**.
+* Paste your AWS Lambda **Function URL** into the *Payload URL* field.
+* Modify the *Content type* selection dropdown to `application/json`.
+* Under event triggers, choose **Let me select individual events**, uncheck *Pushes*, and check **Issue comments**. Click **Add Webhook** to activate the automation.
