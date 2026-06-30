@@ -32,12 +32,12 @@ Adheres strictly to the principles of zero hardcoded configuration secrets. Leve
 Wrapped critical network request pathways inside standard `try-except` blocks. Features custom, granular exception logging along with explicit network timeouts (`timeout=10`) to gracefully prevent serverless function hangs and map cloud-runtime execution anomalies cleanly into monitoring dashboards.
 
 ## 📦 Repository Structure
-```text
 serverless-github-jira-automation/
 ├── src/
 │   └── lambda_function.py     # Main event handler execution script
 ├── README.md                  # Eloquent system architecture documentation
 └── requirements.txt           # Declared project runtime dependencies
+
 ## 📋 Installation & Deployment Guide
 
 Follow these steps to deploy this serverless automation tool into your own cloud environment:
